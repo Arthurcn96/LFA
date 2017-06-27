@@ -22,7 +22,7 @@ public class AnalisadorLexico extends Analisador {
             leProxCaractere();
         }
         catch (IOException e) {
-            throw new RuntimeException("Erro de leitura no arquivo "+_nomeArquivoEntrada);
+            throw new RuntimeException("Erro de leitura no arquivo " +_nomeArquivoEntrada);
         }
     }
     

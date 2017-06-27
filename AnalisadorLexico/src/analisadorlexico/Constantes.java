@@ -2,33 +2,28 @@ package analisadorlexico;
 
 public interface Constantes {
  
-    enum Token { NUM, ATRIB, IDENT, EOF, PTOVIRG, VAZIO };
+    enum Token { NUM,VAR,OPBI,OPBIUN, OPUN, OPIG, DP,PTOVIRG,APOST,AP,FP,AC,FC,WHILE,FOR,DO,IF,SWITCH,CASE, EOF};
  
     String     DIGITOS    = "0123456789",
                 LETRAS    = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOQRSTUVWXYZ",
-                ATRIB      = "-:",
                 VAZIOS    = " \r\n\t",
-                OPBINARIO = "*/%<>",//aqui tinha os operadores <= >= == && ||
-                OPBINUNARIO = "+-",
-                OPUNARIO = "!%",
-                WHILE = "while",
-                DO = "do",
-                IF = "if",
-                SWITCH = "switch",
-                CASE = "case";
- 
+                OPBINARIO = "*/<>",
+                OPBINUNARIO = "+-";
+
     char    EOF    = 0,
             HIFEN     = '-',
             PTOVIRG    = ';',
             DOISPONTOS     = ':',
             OPIGUAL = '=',
-            ABREASPAS = '"',
-            FECHAASPAS = '"',
+            APOST = '\'',
             ABRECHAVES = '{',
             FECHACHAVES = '}',
             ABREPAR = '(',
-            FECHAPAR = ')';
-            
+            FECHAPAR = ')',
+            OPUNARIO = '!',
+            PONTO = '.',
+            E ='&',
+            OU ='|';
  
     String   NOME_DEFAULT_ARQUIVO_ENTRADA = "entrada.txt";
     

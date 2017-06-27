@@ -1,2 +1,30 @@
-x -: 5;
-valor -: valor-total ; -soma -: total ;
+do
+while
+if
+for
+case
+switch
+danielli
+4
+5.6
+.4
+=
+3.45
+()
+''
+{}
+*
+/
+<
+>
+==
+<=
+>=
+&&
+||
++
+-
+!=
+:
+!
+A:¢
