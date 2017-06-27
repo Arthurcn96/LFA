@@ -2,15 +2,14 @@ package analisadorlexico;
 
  
 public class MyAnalisadorLexico extends AnalisadorLexico {
+    
     public MyAnalisadorLexico(String _nomeArquivoEntrada) {
         super(_nomeArquivoEntrada);
     }
-    public void s0() {
-        if(this.proxCaractereIs(DIGITOS)) {
-            leProxCaractere();
-            s2();
-        }
-        else if(this.proxCaractere == ABREPAR) {
+    
+    public void s0() {//Todas as primeiras opcoes possiveis
+        
+        if(this.proxCaractere == ABREPAR) {
             leProxCaractere();
             s3();
         }
@@ -34,7 +33,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
             leProxCaractere();
             s10();
         }
-        else if(this.proxCaractere==OPUNARIO){
+        else if(this.proxCaractere=='!'){
             leProxCaractere();
             s11();
         }
@@ -52,7 +51,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
             leProxCaractere();
             s13();
         }
-        else if(this.proxCaractereIs(OPBINUNARIO)){
+        else if(this.proxCaractereIs(OPBINUNARIO)){// +|-|!
             leProxCaractere();
             s36();
         }
@@ -72,48 +71,54 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
             leProxCaractere();
             s40();
         }
-        else if(this.proxCaractereIs(LETRAS)){
-            if(this.proxCaractere=='d'){
-                leProxCaractere();
-                s34();
-            }
-            else if(this.proxCaractere=='i'){
-                leProxCaractere();
-                s19();
-            }
-            else if(this.proxCaractere=='f'){
-                leProxCaractere();
-                s27();
-            }
-            else if(this.proxCaractere=='c'){
-                leProxCaractere();
-                s30();
-            }
-            else if (this.proxCaractere=='w'){
-                leProxCaractere();
-                s14();
-            }
-            else if(this.proxCaractere=='s'){
-                leProxCaractere();
-                s20();
-            }
-            else{
-                leProxCaractere();
-                s1();
-            }
+        else if(this.proxCaractere=='d'){
+            leProxCaractere();
+            s34();
         }
+        else if(this.proxCaractere=='i'){
+            leProxCaractere();
+            s19();
+        }
+        else if(this.proxCaractere=='f'){
+            leProxCaractere();
+            s27();
+        }
+        else if(this.proxCaractere=='c'){
+            leProxCaractere();
+            s30();
+        }
+        else if (this.proxCaractere=='w'){
+            leProxCaractere();
+            s14();
+        }
+        else if(this.proxCaractere=='s'){
+            leProxCaractere();
+            s20();
+        }
+        else if(this.proxCaractereIs(LETRAS)){
+            leProxCaractere();
+            s1();
+        }
+        
         else if(this.proxCaractereIs(VAZIOS)){
             leProxCaractere();
             s0();
+        }
+        else if(this.proxCaractereIs(DIGITOS)) {
+            leProxCaractere();
+            s2();
         }
         else if(this.proxCaractere == EOF){
             this.tokenReconhecido = Token.EOF;
         }else
             throw new ErroLexico(this.proxCaractere,DIGITOS+LETRAS+VAZIOS+PTOVIRG+HIFEN);
+        
     }
+    public void s3() {
+        this.tokenReconhecido = Token.AP;
+        }
     
-    public void s2() {
-        this.tokenReconhecido = Token.NUM;
+    public void s2(){  
         if(this.proxCaractereIs(DIGITOS)) {
             leProxCaractere();
             s2();
@@ -121,12 +126,10 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
         else if(this.proxCaractere==PONTO){
             leProxCaractere();
             s41();
-        }
+        }else 
+            this.tokenReconhecido = Token.NUM;
     }
     
-    public void s3() {
-        this.tokenReconhecido = Token.AP;
-        }
     public void s4() {
         this.tokenReconhecido = Token.FP;
     }
@@ -140,23 +143,27 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
         this.tokenReconhecido = Token.FC;
     }
     public void s7(){
-        this.tokenReconhecido = Token.OPIG;
         if(this.proxCaractere==OPIGUAL){
             leProxCaractere();
             s38();
         }
+        else
+            this.tokenReconhecido = Token.OPIG;
     }
-    public void s10(){
+    
+    public void s10(){//Ponto e virgula
         this.tokenReconhecido = Token.PTOVIRG;
     }
-    public void s11(){
+    
+    public void s11(){//Operacoess unarias
         this.tokenReconhecido = Token.OPUN;
-        leProxCaractere();
+        //leProxCaractere();
         if(this.proxCaractere==OPIGUAL){
             leProxCaractere();
             s44();
         }   
     }
+    
     
     public void s44(){
         this.tokenReconhecido = Token.OPBI;
@@ -170,16 +177,18 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
     public void s36(){
         this.tokenReconhecido = Token.OPBIUN;
     }
+    public void s37(){
+        this.tokenReconhecido = Token.OPBI;
+        if(this.proxCaractere==OPIGUAL){
+            leProxCaractere();
+            s38();
+        }
+    }
     public void s38(){
         this.tokenReconhecido = Token.OPBI;
     }
-   public void s37(){
-       this.tokenReconhecido = Token.OPBI;
-       if(this.proxCaractere==OPIGUAL){
-           leProxCaractere();
-           s38();
-       }
-   }
+   
+    
    public void s41(){
        this.tokenReconhecido = Token.NUM;
        if(this.proxCaractereIs(DIGITOS)){
@@ -195,6 +204,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
        }
    }
    public void s43(){
+       this.tokenReconhecido = Token.PONTO;
        if(this.proxCaractereIs(DIGITOS)){
            leProxCaractere();
            s42();
@@ -204,15 +214,18 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
        if(this.proxCaractere==E){
            leProxCaractere();
            s38();
-       }
+       }else 
+           throw new ErroLexico(this.proxCaractere,"&");
    }
    public void s40(){
        if(this.proxCaractere==OU){
            leProxCaractere();
            s38();
-       }
+       }else
+           throw new ErroLexico(this.proxCaractere,"|");
    }
-   public void s1(){
+   
+   public void s1(){//Todas as combinacoes de letras
        if(this.proxCaractereIs(LETRAS)){
            leProxCaractere();
            s1();
@@ -221,6 +234,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
            this.tokenReconhecido = Token.VAR;
         }
    }
+   
    public void s34(){
         if(this.proxCaractere=='o'){
            leProxCaractere();
@@ -231,6 +245,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
             s1();
         }
    }
+   
    public void s35(){
        this.tokenReconhecido = Token.DO;
        if(this.proxCaractereIs(LETRAS)){

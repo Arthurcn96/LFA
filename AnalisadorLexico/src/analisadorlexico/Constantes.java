@@ -2,13 +2,13 @@ package analisadorlexico;
 
 public interface Constantes {
  
-    enum Token { NUM,VAR,OPBI,OPBIUN, OPUN, OPIG, DP,PTOVIRG,APOST,AP,FP,AC,FC,WHILE,FOR,DO,IF,SWITCH,CASE, EOF};
+    enum Token { NUM,VAR,OPBI,OPBIUN, PONTO,OPUN, OPIG, DP,PTOVIRG,APOST,AP,FP,AC,FC,WHILE,FOR,DO,IF,SWITCH,CASE, EOF};
  
     String     DIGITOS    = "0123456789",
                 LETRAS    = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOQRSTUVWXYZ",
                 VAZIOS    = " \r\n\t",
                 OPBINARIO = "*/<>",
-                OPBINUNARIO = "+-";
+                OPBINUNARIO = "+-!";
 
     char    EOF    = 0,
             HIFEN     = '-',
@@ -20,7 +20,7 @@ public interface Constantes {
             FECHACHAVES = '}',
             ABREPAR = '(',
             FECHAPAR = ')',
-            OPUNARIO = '!',
+            //OPUNARIO = '',
             PONTO = '.',
             E ='&',
             OU ='|';
