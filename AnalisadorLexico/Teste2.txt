@@ -1,3 +1,5 @@
-while(x=y){
-  a++;
-}
+while(!a){
+  b=a;
+  asd=4;
+  a+asd;
+  }

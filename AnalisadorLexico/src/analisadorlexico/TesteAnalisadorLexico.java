@@ -17,7 +17,7 @@ public class TesteAnalisadorLexico {
             // chama a máquina de Moore várias vezes até encontrar o fim de arquivo
             do {
                 scanner.s0();
-                System.out.println(scanner.tokenReconhecido);
+                System.out.println(scanner.tokenReconhecido +" \t-> " + AnalisadorLexico.saida);
             }
             while(scanner.tokenReconhecido != Constantes.Token.EOF); 
             
