@@ -1,5 +1,14 @@
-while(!a){
-  b=a;
-  asd=4;
-  a+asd;
-  }
+fo
+for
+wh
+whi
+while
+ca
+cas
+casa
+case
+sw
+swit
+switc
+switch
+switchs
