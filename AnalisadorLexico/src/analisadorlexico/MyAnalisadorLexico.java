@@ -9,6 +9,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
     
     public void s0() {//Todas as primeiras opcoes possiveis
         saida = "" + this.proxCaractere;
+        
         if(this.proxCaractere == ABREPAR) {
             leProxCaractere();
             q1();
@@ -151,8 +152,8 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
     }
     public void q7(){//Operacoess unarias 
         //leProxCaractere();
-        //saida = saida + this.proxCaractere;
         if(this.proxCaractere==OPIGUAL){
+        saida = saida + this.proxCaractere;
             leProxCaractere();
             q40();
         }else
@@ -185,6 +186,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
    public void q12(){
        if(this.proxCaractere==E){
+           saida = saida + this.proxCaractere;
            leProxCaractere();
            q41();
        }else 
@@ -192,6 +194,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
    public void q13(){
        if(this.proxCaractere==OU){
+           saida = saida + this.proxCaractere;
            leProxCaractere();
            q41();
        }else
@@ -211,67 +214,67 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
     }
    public void q16(){
         if(this.proxCaractere=='o'){
-           saida = saida + this.proxCaractere;
+        saida = saida + this.proxCaractere;
            leProxCaractere();
            q24();
         }
         else{
-            leProxCaractere();
+            //leProxCaractere();
             q22();
         }
    }
    public void q17(){
-        //   saida = saida + this.proxCaractere;
-       if(this.proxCaractere=='f'){
+        if(this.proxCaractere=='f'){
+        saida = saida + this.proxCaractere;
            leProxCaractere();
            q25();
        }
        else{
-           leProxCaractere();
+           //leProxCaractere();
            q22();
        }
    }
    public void q18(){
-        //saida = saida + this.proxCaractere;
        if(this.proxCaractere=='o'){
+       saida = saida + this.proxCaractere;
            leProxCaractere();
            q26();
        }
        else{
-           leProxCaractere();
+           //leProxCaractere();
            q22();
        }
    }
    public void q19(){
-        //saida = saida + this.proxCaractere;
        if(this.proxCaractere=='a'){
+        saida = saida + this.proxCaractere;
            leProxCaractere();
            q28();
        }
        else{
-           leProxCaractere();
+           //leProxCaractere();
            q22();
        }
    }
    public void q20(){
-        saida = saida + this.proxCaractere;
        if(this.proxCaractere=='h'){
+        saida = saida + this.proxCaractere;
            leProxCaractere();
            q31();
        }
        else {
-           leProxCaractere();
+           //leProxCaractere();
            q22();
        }
    }
    public void q21(){
-        //saida = saida + this.proxCaractere;
        if(this.proxCaractere=='w'){
+       saida = saida + this.proxCaractere;
            leProxCaractere();
            q35();
        }
        else{
-           leProxCaractere();
+           //leProxCaractere();
            q22();
        }
    }
@@ -316,13 +319,13 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
            this.tokenReconhecido = Token.IF;
    }
    public void q26(){
-       saida = saida + this.proxCaractere;
        if(this.proxCaractere=='r'){
+           saida = saida + this.proxCaractere;
            leProxCaractere();
            q27();
        }
-       else{
-           leProxCaractere();
+       else{  
+           //leProxCaractere();
            q22();
        }
    }
@@ -335,24 +338,24 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
             this.tokenReconhecido = Token.FOR;
    }
    public void q28(){
-        saida = saida + this.proxCaractere;
         if(this.proxCaractere=='s'){
+        saida = saida + this.proxCaractere;
            leProxCaractere();
            q29();
        }
        else{
-           leProxCaractere();
+           //leProxCaractere();
            q22();
        }
    }
    public void q29(){
-        saida = saida + this.proxCaractere;
         if(this.proxCaractere=='e'){
+        saida = saida + this.proxCaractere;
            leProxCaractere();
            q30();
        }
        else{
-           leProxCaractere();
+           //leProxCaractere();
            q22();
        }
    }
@@ -366,32 +369,32 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
             
    }
    public void q31(){
-        saida = saida + this.proxCaractere;
          if(this.proxCaractere=='i'){
+        saida = saida + this.proxCaractere;
            leProxCaractere();
            q32();
        }else{
-           leProxCaractere();
+           //leProxCaractere();
            q22();
        }
    }
    public void q32(){
-        saida = saida + this.proxCaractere;
         if(this.proxCaractere=='l'){
+        saida = saida + this.proxCaractere;
            leProxCaractere();
            q33();
        }else{
-           leProxCaractere();
+           //leProxCaractere();
            q22();
        }
    }
    public void q33(){
-        saida = saida + this.proxCaractere;
         if(this.proxCaractere=='e'){
+        saida = saida + this.proxCaractere;
            leProxCaractere();
            q34();
        }else{
-           leProxCaractere();
+           //leProxCaractere();
            q22();
        }
    }
@@ -404,59 +407,59 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
            this.tokenReconhecido = Token.WHILE;
    }
    public void q35(){
-       saida = saida + this.proxCaractere;
        if(this.proxCaractere=='i'){
+       saida = saida + this.proxCaractere;
            leProxCaractere();
            q36();
        }else{
-           leProxCaractere();
+           //leProxCaractere();
            q22();
        }
    }
    public void q36(){
-           saida = saida + this.proxCaractere;
         if(this.proxCaractere=='t'){
+           saida = saida + this.proxCaractere;
             leProxCaractere();
             q37();
         }else{
-            leProxCaractere();
+            //leProxCaractere();
             q22();
         }
    }
    public void q37(){
-        saida = saida + this.proxCaractere;
         if(this.proxCaractere=='c'){
+        saida = saida + this.proxCaractere;
            leProxCaractere();
            q38();
        }else{
-           leProxCaractere();
+           //leProxCaractere();
            q22();
        }
    }
    public void q38(){
-           saida = saida + this.proxCaractere;
        if(this.proxCaractere=='h'){
+           saida = saida + this.proxCaractere;
            leProxCaractere();
            q39();
        }else{
-           leProxCaractere();
+           //leProxCaractere();
            q22();
        }
    }
    public void q39(){
        if(this.proxCaractereIs(LETRAS)){
-           saida = saida + this.proxCaractere;
+            saida = saida + this.proxCaractere;
             leProxCaractere();
             q22();
        }else
            this.tokenReconhecido = Token.SWITCH;
    }
     public void q40(){
-           saida = saida + this.proxCaractere;
+          // saida = saida + this.proxCaractere;
         this.tokenReconhecido = Token.OPBI;
     }
     public void q41(){
-           saida = saida + this.proxCaractere;
+          // saida = saida + this.proxCaractere;
         this.tokenReconhecido = Token.OPBI;
     }
    public void q42(){
