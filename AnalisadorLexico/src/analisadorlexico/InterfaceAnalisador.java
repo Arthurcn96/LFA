@@ -8,6 +8,8 @@ package analisadorlexico;
 import com.sun.xml.internal.txw2.Document;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import javax.swing.JFileChooser;
 import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -39,8 +41,9 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         txtCaminhoArquivo = new javax.swing.JTextField();
-        btnCarregar = new javax.swing.JButton();
         btnArquivo = new javax.swing.JButton();
+        btnCarrega = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtCodigoCarregado = new javax.swing.JTextArea();
@@ -53,10 +56,18 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         setTitle("Analisador Lexico");
         setMinimumSize(new java.awt.Dimension(500, 300));
 
-        btnCarregar.setText("Carregar");
-        btnCarregar.addActionListener(new java.awt.event.ActionListener() {
+        txtCaminhoArquivo.setText("Digite o caminho do arquivo");
+        txtCaminhoArquivo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCaminhoArquivoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCaminhoArquivoFocusLost(evt);
+            }
+        });
+        txtCaminhoArquivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCarregarActionPerformed(evt);
+                txtCaminhoArquivoActionPerformed(evt);
             }
         });
 
@@ -67,40 +78,52 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
             }
         });
 
+        btnCarrega.setText("Carregar");
+        btnCarrega.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarregaActionPerformed(evt);
+            }
+        });
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Save-icon-ss.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtCaminhoArquivo, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
-                .addGap(15, 15, 15)
+                .addComponent(txtCaminhoArquivo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnArquivo)
-                .addGap(103, 103, 103))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(413, Short.MAX_VALUE)
-                    .addComponent(btnCarregar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addGap(9, 9, 9)
+                .addComponent(btnCarrega, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnArquivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtCaminhoArquivo, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnArquivo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCaminhoArquivo, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCarrega)))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(btnCarregar, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                    .addContainerGap()))
         );
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Codigo Escolhido"));
 
-        txtCodigoCarregado.setEditable(false);
         txtCodigoCarregado.setColumns(20);
         txtCodigoCarregado.setRows(5);
         jScrollPane1.setViewportView(txtCodigoCarregado);
@@ -118,9 +141,9 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,8 +155,11 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,7 +177,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         try{
             file = new JFileChooser();
         file.setDialogTitle("Procurar arquivos");
-        file.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        file.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivo txt", "txt");
         file.setFileFilter(filtro);
@@ -165,21 +191,60 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnArquivoActionPerformed
 
-    private void btnCarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarActionPerformed
+    private void btnCarregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregaActionPerformed
+    BufferedReader in;   
+        try{         
+            if(txtCaminhoArquivo.getText().contains(".txt")){
+                in = new BufferedReader(new FileReader(txtCaminhoArquivo.getText()));
+            }else
+                in = new BufferedReader(new FileReader(txtCaminhoArquivo.getText()+".txt"));
+            System.out.println("Arquivo lido!");
+            String str, txt = "";
+            while((str = in.readLine()) != null){ 
+               txt += str+"\n";
+           }
+           txtCodigoCarregado.setText(txt);
+       }     catch (Exception e) {
+           System.err.println("erro");
+       }
+    }//GEN-LAST:event_btnCarregaActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    FileWriter arq;
     try{
-        BufferedReader in = new BufferedReader(new FileReader(file.getSelectedFile().getPath()));
-        System.out.println("Arquivo lido!");
-        String str, txt = "";
-        while((str = in.readLine()) != null){
-                txt += str+"\n";
+        if(txtCaminhoArquivo.getText().isEmpty() || txtCaminhoArquivo.getText().equals(("Digite o caminho do arquivo"))){
+            txtCaminhoArquivo.setText("Digite o caminho do arquivo");
+            throw new RuntimeException("Erro: Arquivo sem nome ");
+        }else
+            if(txtCaminhoArquivo.getText().contains(".txt")){
+                arq = new FileWriter(txtCaminhoArquivo.getText());
+            }else
+                arq = new FileWriter(txtCaminhoArquivo.getText()+".txt");
+        
+        PrintWriter gravarTxt = new PrintWriter(arq);
+        //gravarTxt.printf("+--Resultado--+%n");
+        gravarTxt.printf(txtCodigoCarregado.getText());
+        arq.close();
+    }catch(Exception ex){
+        System.err.println("erro: "+ ex.toString());
+    }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtCaminhoArquivoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCaminhoArquivoFocusGained
+        if( txtCaminhoArquivo.getText().equals(("Digite o caminho do arquivo")) ){
+            txtCaminhoArquivo.setText("");
         }
-        txtCodigoCarregado.setText(txt);
-    }
-    catch (Exception e) {
-            System.err.println("erro");
-    }
-    
-    }//GEN-LAST:event_btnCarregarActionPerformed
+    }//GEN-LAST:event_txtCaminhoArquivoFocusGained
+
+    private void txtCaminhoArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCaminhoArquivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCaminhoArquivoActionPerformed
+
+    private void txtCaminhoArquivoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCaminhoArquivoFocusLost
+        if(txtCaminhoArquivo.getText().isEmpty()){
+            txtCaminhoArquivo.setText("Digite o caminho do arquivo");
+        }
+    }//GEN-LAST:event_txtCaminhoArquivoFocusLost
 
     /**
      * @param args the command line arguments
@@ -218,8 +283,9 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnArquivo;
-    private javax.swing.JButton btnCarregar;
+    private javax.swing.JButton btnCarrega;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
