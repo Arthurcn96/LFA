@@ -122,7 +122,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
         else if(this.proxCaractere == EOF){
             this.tokenReconhecido = Token.EOF;
         }else
-            throw new ErroLexico(this.proxCaractere,DIGITOS+LETRAS+VAZIOS+PTOVIRG+HIFEN);
+            throw new ErroLexico(this.proxCaractere,DIGITOS+LETRAS+PTOVIRG+OPBINARIO+OPBINUNARIO+"\n"+DOISPONTOS+OPIGUAL+APOST+ABRECHAVES+FECHACHAVES+ABREPAR+FECHAPAR+OPUNARIO+PONTO+E+E+OU+OU);
         
     }
     

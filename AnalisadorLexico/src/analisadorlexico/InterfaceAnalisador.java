@@ -5,22 +5,15 @@
  */
 package analisadorlexico;
 
-import com.sun.xml.internal.txw2.Document;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import javax.swing.JFileChooser;
-import javax.swing.JTextArea;
+import java.awt.Toolkit;
+import java.io.*;
+import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.plaf.TextUI;
 import sun.security.action.OpenFileInputStreamAction;
 
-/**
- *
- * @author Deus
- */
+
 public class InterfaceAnalisador extends javax.swing.JFrame {
+    static public MyAnalisadorLexico scanner;
     static JFileChooser file;
     /**
      * Creates new form InterfaceAnalisador
@@ -43,7 +36,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         txtCaminhoArquivo = new javax.swing.JTextField();
         btnArquivo = new javax.swing.JButton();
         btnCarrega = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtCodigoCarregado = new javax.swing.JTextArea();
@@ -54,6 +47,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Analisador Lexico");
+        setIconImage(Toolkit.getDefaultToolkit().getImage("Pepe.png"));
         setMinimumSize(new java.awt.Dimension(500, 300));
 
         txtCaminhoArquivo.setText("Digite o caminho do arquivo");
@@ -71,7 +65,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
             }
         });
 
-        btnArquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/analisadorlexico/iconPasta.gif"))); // NOI18N
+        btnArquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconPasta.gif"))); // NOI18N
         btnArquivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnArquivoActionPerformed(evt);
@@ -85,10 +79,10 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Save-icon-ss.png"))); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Save-icon-ss.png"))); // NOI18N
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnSalvarActionPerformed(evt);
             }
         });
 
@@ -101,7 +95,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnArquivo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(btnSalvar)
                 .addGap(9, 9, 9)
                 .addComponent(btnCarrega, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6))
@@ -112,7 +106,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(btnArquivo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtCaminhoArquivo, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -198,18 +192,48 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
                 in = new BufferedReader(new FileReader(txtCaminhoArquivo.getText()));
             }else
                 in = new BufferedReader(new FileReader(txtCaminhoArquivo.getText()+".txt"));
-            System.out.println("Arquivo lido!");
-            String str, txt = "";
-            while((str = in.readLine()) != null){ 
+                String str, txt = "";
+                while((str = in.readLine()) != null){ 
                txt += str+"\n";
            }
            txtCodigoCarregado.setText(txt);
+           txtOutputAnalisador.setText("");
        }     catch (Exception e) {
-           System.err.println("erro");
+            System.out.println("Erro ao carregar o arquivo.");
        }
+        
+        try {
+             if(txtCaminhoArquivo.getText().isEmpty() || txtCaminhoArquivo.getText().equals(("Digite o caminho do arquivo"))){
+                txtCaminhoArquivo.setText("Digite o caminho do arquivo");
+                throw new RuntimeException("Erro: Arquivo sem nome ");
+             }
+//             else{
+//                throw new RuntimeException("esqueceu de escrever o nome do arquivo de entrada! \n" + "No Eclipse insira em: Run - Open Run Dialog- Arguments");
+//             }
+            
+            scanner = new MyAnalisadorLexico(txtCaminhoArquivo.getText());
+            //scanner = new MyAnalisadorLexico(file.getSelectedFile().getPath());
+            //JOptionPane.showMessageDialog(null, txtOutputAnalisador.getText() +"\n"+file.getSelectedFile().getPath());
+            // chama a máquina de Moore várias vezes até encontrar o fim de arquivo
+            do {
+                scanner.s0();
+                txtOutputAnalisador.setText(txtOutputAnalisador.getText() + scanner.tokenReconhecido +" \t-> " + AnalisadorLexico.saida +"\n");
+            }
+            while(scanner.tokenReconhecido != Constantes.Token.EOF); 
+            
+            txtOutputAnalisador.setText(txtOutputAnalisador.getText() + "\nAnálise lexica realizada com sucesso.");
+        }
+        catch(ErroLexico e) {
+            //System.out.println("Erro léxico: "+e.toString());
+            txtOutputAnalisador.setText(txtOutputAnalisador.getText() + e.toString());
+            JOptionPane.showMessageDialog(null, e.toString(),"ERRO LEXICO",0);
+        }
+        catch(RuntimeException e) {
+            System.out.println("Erro: "+e.getMessage());
+        }
     }//GEN-LAST:event_btnCarregaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
     FileWriter arq;
     try{
         if(txtCaminhoArquivo.getText().isEmpty() || txtCaminhoArquivo.getText().equals(("Digite o caminho do arquivo"))){
@@ -224,11 +248,12 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         PrintWriter gravarTxt = new PrintWriter(arq);
         //gravarTxt.printf("+--Resultado--+%n");
         gravarTxt.printf(txtCodigoCarregado.getText());
+        
         arq.close();
     }catch(Exception ex){
         System.err.println("erro: "+ ex.toString());
     }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void txtCaminhoArquivoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCaminhoArquivoFocusGained
         if( txtCaminhoArquivo.getText().equals(("Digite o caminho do arquivo")) ){
@@ -276,7 +301,9 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InterfaceAnalisador().setVisible(true);
+                InterfaceAnalisador n = new InterfaceAnalisador();
+                n.setVisible(true);
+
             }
         });
     }
@@ -284,8 +311,8 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnArquivo;
     private javax.swing.JButton btnCarrega;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;

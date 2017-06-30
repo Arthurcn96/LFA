@@ -11,7 +11,6 @@ public interface Constantes {
                 OPBINUNARIO = "+-";
 
     char    EOF    = 0,
-            HIFEN     = '-',
             PTOVIRG    = ';',
             DOISPONTOS     = ':',
             OPIGUAL = '=',
