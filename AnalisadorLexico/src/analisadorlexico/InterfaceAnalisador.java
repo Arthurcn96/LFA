@@ -6,10 +6,11 @@
 package analisadorlexico;
 
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import sun.security.action.OpenFileInputStreamAction;
+
 
 
 public class InterfaceAnalisador extends javax.swing.JFrame {
@@ -20,6 +21,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
      */
     public InterfaceAnalisador() {
         initComponents();
+        btnCarrega.setEnabled(false);
     }
 
     /**
@@ -59,9 +61,9 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
                 txtCaminhoArquivoFocusLost(evt);
             }
         });
-        txtCaminhoArquivo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCaminhoArquivoActionPerformed(evt);
+        txtCaminhoArquivo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCaminhoArquivoKeyTyped(evt);
             }
         });
 
@@ -120,6 +122,11 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
 
         txtCodigoCarregado.setColumns(20);
         txtCodigoCarregado.setRows(5);
+        txtCodigoCarregado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoCarregadoKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(txtCodigoCarregado);
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("Analisador Lexico"));
@@ -141,7 +148,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
             .addComponent(jScrollPane2)
         );
 
@@ -178,6 +185,11 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         
         int retorno = file.showOpenDialog(this);
         txtCaminhoArquivo.setText( file.getSelectedFile().getPath() );
+        
+        if(file.getSelectedFile().isFile()){
+            btnCarrega.setEnabled(true);
+        }
+        
         }catch(java.lang.NullPointerException e){
             System.err.println("Erro: arquivo foi escolhido");
         }catch(Exception e){
@@ -187,11 +199,13 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
 
     private void btnCarregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregaActionPerformed
     BufferedReader in;   
+    
         try{         
             if(txtCaminhoArquivo.getText().contains(".txt")){
                 in = new BufferedReader(new FileReader(txtCaminhoArquivo.getText()));
             }else
                 in = new BufferedReader(new FileReader(txtCaminhoArquivo.getText()+".txt"));
+            
                 String str, txt = "";
                 while((str = in.readLine()) != null){ 
                txt += str+"\n";
@@ -242,13 +256,15 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         }else
             if(txtCaminhoArquivo.getText().contains(".txt")){
                 arq = new FileWriter(txtCaminhoArquivo.getText());
-            }else
+            }else{
                 arq = new FileWriter(txtCaminhoArquivo.getText()+".txt");
+                txtCaminhoArquivo.setText(txtCaminhoArquivo.getText()+".txt");
+            }
         
         PrintWriter gravarTxt = new PrintWriter(arq);
         //gravarTxt.printf("+--Resultado--+%n");
         gravarTxt.printf(txtCodigoCarregado.getText());
-        
+        btnCarrega.setEnabled(true);
         arq.close();
     }catch(Exception ex){
         System.err.println("erro: "+ ex.toString());
@@ -256,20 +272,28 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void txtCaminhoArquivoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCaminhoArquivoFocusGained
-        if( txtCaminhoArquivo.getText().equals(("Digite o caminho do arquivo")) ){
-            txtCaminhoArquivo.setText("");
-        }
+    if( txtCaminhoArquivo.getText().equals(("Digite o caminho do arquivo")) ){
+        txtCaminhoArquivo.setText("");
+    }
     }//GEN-LAST:event_txtCaminhoArquivoFocusGained
-
-    private void txtCaminhoArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCaminhoArquivoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCaminhoArquivoActionPerformed
 
     private void txtCaminhoArquivoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCaminhoArquivoFocusLost
         if(txtCaminhoArquivo.getText().isEmpty()){
             txtCaminhoArquivo.setText("Digite o caminho do arquivo");
         }
     }//GEN-LAST:event_txtCaminhoArquivoFocusLost
+
+    private void txtCodigoCarregadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoCarregadoKeyTyped
+        if(401 == KeyEvent.KEY_PRESSED){
+            btnCarrega.setEnabled(false);
+        }
+    }//GEN-LAST:event_txtCodigoCarregadoKeyTyped
+
+    private void txtCaminhoArquivoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCaminhoArquivoKeyTyped
+        if(401 == KeyEvent.KEY_PRESSED){
+            btnCarrega.setEnabled(false);
+        }
+    }//GEN-LAST:event_txtCaminhoArquivoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -297,7 +321,6 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(InterfaceAnalisador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
