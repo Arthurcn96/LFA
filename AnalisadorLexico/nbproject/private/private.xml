@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/arthur/Documents/GitHub/AnalisadorLexico/AnalisadorLexico/src/analisadorlexico/MyAnalisadorLexico.java</file>
-            <file>file:/home/arthur/Documents/GitHub/AnalisadorLexico/AnalisadorLexico/src/analisadorlexico/InterfaceAnalisador.java</file>
-            <file>file:/home/arthur/Documents/GitHub/AnalisadorLexico/AnalisadorLexico/src/analisadorlexico/ErroLexico.java</file>
-            <file>file:/home/arthur/Documents/GitHub/AnalisadorLexico/AnalisadorLexico/src/analisadorlexico/AnalisadorLexico.java</file>
-            <file>file:/home/arthur/Documents/GitHub/AnalisadorLexico/AnalisadorLexico/src/analisadorlexico/Constantes.java</file>
-            <file>file:/home/arthur/Documents/GitHub/AnalisadorLexico/AnalisadorLexico/src/analisadorlexico/Analisador.java</file>
-            <file>file:/home/arthur/Documents/GitHub/AnalisadorLexico/AnalisadorLexico/src/analisadorlexico/TesteAnalisadorLexico.java</file>
+            <file>file:/C:/Users/danie/LFA/AnalisadorLexico/src/analisadorlexico/Uso.java</file>
+            <file>file:/C:/Users/danie/LFA/AnalisadorLexico/src/analisadorlexico/MyAnalisadorSintatico.java</file>
+            <file>file:/C:/Users/danie/LFA/AnalisadorLexico/src/analisadorlexico/Constantes.java</file>
+            <file>file:/C:/Users/danie/LFA/AnalisadorLexico/src/analisadorlexico/AnalisadorSintatico.java</file>
         </group>
     </open-files>
 </project-private>
