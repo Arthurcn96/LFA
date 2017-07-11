@@ -27,7 +27,7 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
         else if(proxTokenIs(Token.DO))
             fdowhile();
         else {
-            //Token[] tokensEsperados = {Token.IDENT,Token.EOF};
+            Token[] tokensEsperados = {Token.VAR,Token.WHILE,Token.FOR,Token.SWITCH,Token.IF,Token.DO};
             throw new ErroSintatico(this.scanner.tokenReconhecido,tokensEsperados);
         }
     }
@@ -36,8 +36,10 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
             listaCom();
         else if(proxTokenIs(Token.EOF))
             lambda();
-        else
-            ;
+        else{
+            Token[] tokensEsperados = {Token.VAR,Token.WHILE,Token.FOR,Token.SWITCH,Token.IF,Token.DO,Token.EOF};
+            throw new ErroSintatico(this.scanner.tokenReconhecido,tokensEsperados);
+        }
     }
     public void fwhile(){
         reconhece(Token.WHILE);
@@ -75,8 +77,10 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
         }
         else if(proxTokenIs(Token.EOF))
             lambda();
-        else
-            ;
+        else{
+            Token[] tokensEsperados = {Token.CASE,Token.DP,Token.PTVIRG,Token.EOF};
+            throw new ErroSintatico(this.scanner.tokenReconhecido,tokensEsperados);
+        }
     }
     public void caractere(){
         if(proxTokenIs(Token.APOST)){
