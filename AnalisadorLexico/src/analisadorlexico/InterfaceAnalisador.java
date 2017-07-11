@@ -16,6 +16,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class InterfaceAnalisador extends javax.swing.JFrame {
     static public MyAnalisadorLexico scanner;
     static JFileChooser file;
+    BufferedReader in;
     /**
      * Creates new form InterfaceAnalisador
      */
@@ -174,6 +175,25 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void carregarArquivo(String caminhoArquivo){
+        try{
+            
+        if(txtCaminhoArquivo.getText().contains(".txt")){
+                in = new BufferedReader(new FileReader(caminhoArquivo));
+            }else
+                in = new BufferedReader(new FileReader(caminhoArquivo+".txt"));
+            
+                String str, txt = "";
+                while((str = in.readLine()) != null){ 
+                    txt += str+"\n";
+                }
+           txtCodigoCarregado.setText(txt);
+        }catch (Exception e) {
+            System.out.println("Erro ao carregar o arquivo.");
+            JOptionPane.showMessageDialog(null, "ERRO","Erro ao carregar arquivo: " + e.toString(),0);
+       }
+    }
+    
     private void btnArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArquivoActionPerformed
         try{
             file = new JFileChooser();
@@ -190,6 +210,8 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
             btnCarrega.setEnabled(true);
         }
         
+            carregarArquivo(txtCaminhoArquivo.getText());
+        
         }catch(java.lang.NullPointerException e){
             System.err.println("Erro: arquivo foi escolhido");
         }catch(Exception e){
@@ -198,68 +220,70 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnArquivoActionPerformed
 
     private void btnCarregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregaActionPerformed
-    BufferedReader in;   
-    
-        try{         
-            if(txtCaminhoArquivo.getText().contains(".txt")){
-                in = new BufferedReader(new FileReader(txtCaminhoArquivo.getText()));
-            }else
-                in = new BufferedReader(new FileReader(txtCaminhoArquivo.getText()+".txt"));
+   
+    MyAnalisadorSintatico parser;
+        try{
             
-                String str, txt = "";
-                while((str = in.readLine()) != null){ 
-               txt += str+"\n";
-           }
-           txtCodigoCarregado.setText(txt);
+           carregarArquivo(txtCaminhoArquivo.getText());
            txtOutputAnalisador.setText("");
-       }     catch (Exception e) {
-            System.out.println("Erro ao carregar o arquivo.");
-       }
-        
-        try {
-             if(txtCaminhoArquivo.getText().isEmpty() || txtCaminhoArquivo.getText().equals(("Digite o caminho do arquivo"))){
-                txtCaminhoArquivo.setText("Digite o caminho do arquivo");
-                throw new RuntimeException("Erro: Arquivo sem nome ");
-             }
-//             else{
-//                throw new RuntimeException("esqueceu de escrever o nome do arquivo de entrada! \n" + "No Eclipse insira em: Run - Open Run Dialog- Arguments");
-//             }
             
             scanner = new MyAnalisadorLexico(txtCaminhoArquivo.getText());
-            //scanner = new MyAnalisadorLexico(file.getSelectedFile().getPath());
-            //JOptionPane.showMessageDialog(null, txtOutputAnalisador.getText() +"\n"+file.getSelectedFile().getPath());
-            // chama a máquina de Moore várias vezes até encontrar o fim de arquivo
+            parser = new MyAnalisadorSintatico(txtCaminhoArquivo.getText());
+
             do {
-                scanner.s0();
-                txtOutputAnalisador.setText(txtOutputAnalisador.getText() + scanner.tokenReconhecido +" \t-> " + AnalisadorLexico.saida +"\n");
+                //scanner.s0();
+                //txtOutputAnalisador.setText(txtOutputAnalisador.getText() + scanner.tokenReconhecido +" \t-> " + AnalisadorLexico.saida +"\n");
+                
+                parser.listaCom();
             }
-            while(scanner.tokenReconhecido != Constantes.Token.EOF); 
+            while(parser.tokenReconhecido != Constantes.Token.EOF); 
+            txtOutputAnalisador.setText("Análise realizada com sucesso no arquivo " + parser.nomeArquivoEntrada);
             
-            txtOutputAnalisador.setText(txtOutputAnalisador.getText() + "\nAnálise lexica realizada com sucesso.");
+            //txtOutputAnalisador.setText(txtOutputAnalisador.getText() + "\nAnálise lexica realizada com sucesso.");
         }
         catch(ErroLexico e) {
-            //System.out.println("Erro léxico: "+e.toString());
+            txtOutputAnalisador.setText("Erro léxico:\n"+e.toString());
             txtOutputAnalisador.setText(txtOutputAnalisador.getText() + e.toString());
             JOptionPane.showMessageDialog(null, e.toString(),"ERRO LEXICO",0);
         }
-        catch(RuntimeException e) {
-            System.out.println("Erro: "+e.getMessage());
+        catch(ErroSintatico e) {
+            txtOutputAnalisador.setText("Erro sintático:\n"+e.toString());
+            //JOptionPane.showMessageDialog(null, e.toString(),"Erro sintático: "+e.toString(),0);
         }
+        catch(RuntimeException e) {
+            txtOutputAnalisador.setText("Erro:\n"+e.getMessage());
+            //JOptionPane.showMessageDialog(null, e.getMessage(),"Erro sintático: "+e.toString(),0);
+        }
+        catch (Exception e) {
+            System.out.println("Erro ao carregar o arquivo.");
+            //JOptionPane.showMessageDialog(null, "ERRO","Erro ao carregar arquivo: " + e.toString(),0);
+       }
     }//GEN-LAST:event_btnCarregaActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-    FileWriter arq;
+   FileWriter arq = null;
+    
     try{
         if(txtCaminhoArquivo.getText().isEmpty() || txtCaminhoArquivo.getText().equals(("Digite o caminho do arquivo"))){
-            txtCaminhoArquivo.setText("Digite o caminho do arquivo");
-            throw new RuntimeException("Erro: Arquivo sem nome ");
-        }else
-            if(txtCaminhoArquivo.getText().contains(".txt")){
-                arq = new FileWriter(txtCaminhoArquivo.getText());
-            }else{
-                arq = new FileWriter(txtCaminhoArquivo.getText()+".txt");
-                txtCaminhoArquivo.setText(txtCaminhoArquivo.getText()+".txt");
-            }
+            //txtCaminhoArquivo.setText("Digite o caminho do arquivo");
+            //throw new RuntimeException("Erro: Arquivo sem nome ");
+            file = new JFileChooser();
+            file.setDialogTitle("Procurar arquivos");
+            file.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivo txt", "txt");
+            file.setFileFilter(filtro);
+
+            int retorno = file.showOpenDialog(this);
+            txtCaminhoArquivo.setText( file.getSelectedFile().getPath() );
+            
+        }
+        if(txtCaminhoArquivo.getText().contains(".txt")){
+            arq = new FileWriter(txtCaminhoArquivo.getText());
+        }else{
+            arq = new FileWriter(txtCaminhoArquivo.getText()+".txt");
+            txtCaminhoArquivo.setText(txtCaminhoArquivo.getText()+".txt");
+        }
         
         PrintWriter gravarTxt = new PrintWriter(arq);
         //gravarTxt.printf("+--Resultado--+%n");
@@ -269,6 +293,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
     }catch(Exception ex){
         System.err.println("erro: "+ ex.toString());
     }
+    
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void txtCaminhoArquivoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCaminhoArquivoFocusGained

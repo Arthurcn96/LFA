@@ -3,6 +3,7 @@ package analisadorlexico;
 
 public class MyAnalisadorSintatico extends AnalisadorSintatico {
     public String nomeArquivoEntrada;
+    Token tokenReconhecido;
     
     public MyAnalisadorSintatico(String _nomeArquivoEntrada) {
         super(_nomeArquivoEntrada);
@@ -34,8 +35,10 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
     public void recursaoComand() {
         if(proxTokenIs(Token.VAR)||proxTokenIs(Token.WHILE)||proxTokenIs(Token.FOR)||proxTokenIs(Token.SWITCH)||proxTokenIs(Token.IF)||proxTokenIs(Token.DO))
             listaCom();
-        else if(proxTokenIs(Token.EOF))
+        else if(proxTokenIs(Token.EOF)){
+            //tokenReconhecido = Token.EOF;
             lambda();
+        }
         else{
             Token[] tokensEsperados = {Token.VAR,Token.WHILE,Token.FOR,Token.SWITCH,Token.IF,Token.DO,Token.EOF};
             throw new ErroSintatico(this.scanner.tokenReconhecido,tokensEsperados);
