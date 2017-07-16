@@ -1,4 +1,4 @@
-package analisadorlexico;
+package analisador;
 
 
 public class ErroSintatico extends RuntimeException implements Constantes {

@@ -1,4 +1,4 @@
-package analisadorlexico;
+package analisador;
 
 public abstract class Analisador implements Constantes {
     protected String nomeArquivoEntrada;

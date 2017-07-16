@@ -1,4 +1,4 @@
-package analisadorlexico;
+package analisador;
 
 
 public class AnalisadorSintatico extends Analisador implements Constantes {

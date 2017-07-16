@@ -1,4 +1,4 @@
-package analisadorlexico;
+package analisador;
 
 public interface Constantes {
  

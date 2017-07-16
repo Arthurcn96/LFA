@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package analisadorlexico;
+package analisador;
 
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -14,7 +14,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 public class InterfaceAnalisador extends javax.swing.JFrame {
-    static public MyAnalisadorLexico scanner;
+    static public MyAnalisadorSintatico scanner;
     static JFileChooser file;
     BufferedReader in;
     /**
@@ -143,7 +143,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))
         );
@@ -227,23 +227,22 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
            carregarArquivo(txtCaminhoArquivo.getText());
            txtOutputAnalisador.setText("");
             
-            scanner = new MyAnalisadorLexico(txtCaminhoArquivo.getText());
+            //scanner = new MyAnalisadorLexico(txtCaminhoArquivo.getText());
             parser = new MyAnalisadorSintatico(txtCaminhoArquivo.getText());
-
+            parser.listaCom();
             do {
                 //scanner.s0();
                 //txtOutputAnalisador.setText(txtOutputAnalisador.getText() + scanner.tokenReconhecido +" \t-> " + AnalisadorLexico.saida +"\n");
                 
-                parser.listaCom();
+                
             }
             while(parser.tokenReconhecido != Constantes.Token.EOF); 
-            txtOutputAnalisador.setText("Análise realizada com sucesso no arquivo " + parser.nomeArquivoEntrada);
+            txtOutputAnalisador.setText("Análise realizada com sucesso no arquivo " + file.getSelectedFile().getName());
             
             //txtOutputAnalisador.setText(txtOutputAnalisador.getText() + "\nAnálise lexica realizada com sucesso.");
         }
         catch(ErroLexico e) {
             txtOutputAnalisador.setText("Erro léxico:\n"+e.toString());
-            txtOutputAnalisador.setText(txtOutputAnalisador.getText() + e.toString());
             JOptionPane.showMessageDialog(null, e.toString(),"ERRO LEXICO",0);
         }
         catch(ErroSintatico e) {
