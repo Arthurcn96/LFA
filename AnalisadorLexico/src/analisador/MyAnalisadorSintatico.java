@@ -17,6 +17,13 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
         tokenReconhecido = Token.EOF;
         reconhece(Token.EOF);
         }
+        else if(proxTokenIs(Token.FC)){//Permite o bloco estar vazio
+            lambda();
+        }
+        else{
+            Token[] tokensEsperados = {Token.IF,Token.FOR,Token.DO,Token.SWITCH,Token.WHILE};
+            throw new ErroSintatico(this.scanner.tokenReconhecido,tokensEsperados);
+        }
     }
     public void comando() {
         if(proxTokenIs(Token.VAR)) {
@@ -33,8 +40,13 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
             fif();
         else if(proxTokenIs(Token.DO))
             fdowhile();
-        else
-            ; 
+        else{
+            lambda();//Permite o programa ser vazio.
+            
+            //Token[] tokensEsperados = {Token.IF,Token.FOR,Token.DO,Token.SWITCH,Token.WHILE};
+            //throw new ErroSintatico(this.scanner.tokenReconhecido,tokensEsperados);
+            
+        }
     }
 
     public void fwhile(){
@@ -129,9 +141,15 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
     }
     
     public void atribuicao() {
-        reconhece(Token.VAR);
-        elemento();
+        if(proxTokenIs(Token.VAR)){
+            leProxToken();
+            elemento();
+        }
+        else{
+            lambda();
+        }
     }
+
     public void elemento(){
         if(proxTokenIs(Token.OPIG)){
             leProxToken();
@@ -183,7 +201,8 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
             s();
         }
         else{
-            ;
+            //Token[] tokensEsperados = {Token.OPBI,Token.OPBIUN};
+            //throw new ErroSintatico(this.scanner.tokenReconhecido,tokensEsperados);
         }
     }
     public void op(){

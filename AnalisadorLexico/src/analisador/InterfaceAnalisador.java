@@ -35,6 +35,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         txtCaminhoArquivo = new javax.swing.JTextField();
         btnArquivo = new javax.swing.JButton();
@@ -47,6 +48,8 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         txtOutputAnalisador = new javax.swing.JTextArea();
 
         jButton1.setText("jButton1");
+
+        jTextField1.setText("jTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Analisador Lexico");
@@ -105,17 +108,15 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnCarrega, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(btnArquivo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtCaminhoArquivo, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnCarrega)))
+                    .addComponent(btnArquivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCaminhoArquivo))
                 .addContainerGap())
         );
 
@@ -130,12 +131,14 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(txtCodigoCarregado);
 
-        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("Analisador Lexico"));
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("Analisador Sintático"));
         jScrollPane2.setToolTipText("");
+        jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         txtOutputAnalisador.setEditable(false);
         txtOutputAnalisador.setColumns(20);
         txtOutputAnalisador.setRows(5);
+        txtOutputAnalisador.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane2.setViewportView(txtOutputAnalisador);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -189,8 +192,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
                 }
            txtCodigoCarregado.setText(txt);
         }catch (Exception e) {
-            System.out.println("Erro ao carregar o arquivo.");
-            JOptionPane.showMessageDialog(null, "ERRO","Erro ao carregar arquivo: " + e.toString(),0);
+            JOptionPane.showMessageDialog(null, "Erro ao carregar arquivo: " + e.toString(), "ERRO",0);
        }
     }
     
@@ -304,6 +306,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
     private void txtCaminhoArquivoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCaminhoArquivoFocusLost
         if(txtCaminhoArquivo.getText().isEmpty()){
             txtCaminhoArquivo.setText("Digite o caminho do arquivo");
+            btnCarrega.setEnabled(false);
         }
     }//GEN-LAST:event_txtCaminhoArquivoFocusLost
 
@@ -315,7 +318,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
 
     private void txtCaminhoArquivoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCaminhoArquivoKeyTyped
         if(401 == KeyEvent.KEY_PRESSED){
-            btnCarrega.setEnabled(false);
+            btnCarrega.setEnabled(true);
         }
     }//GEN-LAST:event_txtCaminhoArquivoKeyTyped
 
@@ -330,7 +333,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("GTK+".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -364,6 +367,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField txtCaminhoArquivo;
     private javax.swing.JTextArea txtCodigoCarregado;
     private javax.swing.JTextArea txtOutputAnalisador;
