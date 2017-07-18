@@ -12,10 +12,19 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 
-
+/**
+ * Toda a interface responsavel pelo funcionamento do analisador.
+ * @author Grupo6
+ */
 public class InterfaceAnalisador extends javax.swing.JFrame {
     static public MyAnalisadorSintatico scanner;
+    /**
+     * A variavel aonde fica o arquivo escolhido para ser analisado
+     */
     static JFileChooser file;
+    /**
+     * Arquivo no qual eh carregado o .txt
+     */
     BufferedReader in;
     /**
      * Creates new form InterfaceAnalisador
@@ -178,6 +187,12 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Metodo que carrega o .txt do 'caminhoArquivo' passado, e entao 
+     * carrega no output do analisador.
+     * 
+     * @param caminhoArquivo 
+     */
     public void carregarArquivo(String caminhoArquivo){
         try{
             
@@ -195,7 +210,11 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao carregar arquivo: " + e.toString(), "ERRO",0);
        }
     }
-    
+    /**
+     * Procura um arquivo ou pasta do diretorio, passando para o JtextField
+     * (caixa de texto) o caminho para o arquivo selecionado.
+     * @param evt 
+     */
     private void btnArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArquivoActionPerformed
         try{
             file = new JFileChooser();
@@ -220,7 +239,11 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
             System.err.println("Erro: "+e.toString());
         }
     }//GEN-LAST:event_btnArquivoActionPerformed
-
+    
+    /**
+     * Eh entao chamada a funcao que inicia a Analise Sintatica
+     * @param evt 
+     */
     private void btnCarregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregaActionPerformed
    
     MyAnalisadorSintatico parser;
@@ -229,19 +252,15 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
            carregarArquivo(txtCaminhoArquivo.getText());
            txtOutputAnalisador.setText("");
             
-            //scanner = new MyAnalisadorLexico(txtCaminhoArquivo.getText());
             parser = new MyAnalisadorSintatico(txtCaminhoArquivo.getText());
             parser.listaCom();
             do {
-                //scanner.s0();
-                //txtOutputAnalisador.setText(txtOutputAnalisador.getText() + scanner.tokenReconhecido +" \t-> " + AnalisadorLexico.saida +"\n");
                 
                 
             }
             while(parser.tokenReconhecido != Constantes.Token.EOF); 
             txtOutputAnalisador.setText("Análise realizada com sucesso no arquivo " + file.getSelectedFile().getName());
             
-            //txtOutputAnalisador.setText(txtOutputAnalisador.getText() + "\nAnálise lexica realizada com sucesso.");
         }
         catch(ErroLexico e) {
             txtOutputAnalisador.setText("Erro léxico:\n"+e.toString());
@@ -249,25 +268,24 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         }
         catch(ErroSintatico e) {
             txtOutputAnalisador.setText("Erro sintático:\n"+e.toString());
-            //JOptionPane.showMessageDialog(null, e.toString(),"Erro sintático: "+e.toString(),0);
         }
         catch(RuntimeException e) {
             txtOutputAnalisador.setText("Erro:\n"+e.getMessage());
-            //JOptionPane.showMessageDialog(null, e.getMessage(),"Erro sintático: "+e.toString(),0);
         }
         catch (Exception e) {
             System.out.println("Erro ao carregar o arquivo.");
-            //JOptionPane.showMessageDialog(null, "ERRO","Erro ao carregar arquivo: " + e.toString(),0);
        }
     }//GEN-LAST:event_btnCarregaActionPerformed
 
+    /**
+     * Salva o arquivo editado no 'Codigo Escolhido' (JtextArea)
+     * @param evt 
+     */
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
    FileWriter arq = null;
     
     try{
         if(txtCaminhoArquivo.getText().isEmpty() || txtCaminhoArquivo.getText().equals(("Digite o caminho do arquivo"))){
-            //txtCaminhoArquivo.setText("Digite o caminho do arquivo");
-            //throw new RuntimeException("Erro: Arquivo sem nome ");
             file = new JFileChooser();
             file.setDialogTitle("Procurar arquivos");
             file.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
@@ -287,7 +305,6 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         }
         
         PrintWriter gravarTxt = new PrintWriter(arq);
-        //gravarTxt.printf("+--Resultado--+%n");
         gravarTxt.printf(txtCodigoCarregado.getText());
         btnCarrega.setEnabled(true);
         arq.close();
@@ -299,25 +316,30 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
 
     private void txtCaminhoArquivoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCaminhoArquivoFocusGained
     if( txtCaminhoArquivo.getText().equals(("Digite o caminho do arquivo")) ){
+        //Quando usuario clica na area de texto(Para escrever o caminho) entao a area de texto e limpa
         txtCaminhoArquivo.setText("");
     }
     }//GEN-LAST:event_txtCaminhoArquivoFocusGained
 
     private void txtCaminhoArquivoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCaminhoArquivoFocusLost
         if(txtCaminhoArquivo.getText().isEmpty()){
+            //Usuario clica fora da area de texto sem escrever nada ele escreve o texto default
             txtCaminhoArquivo.setText("Digite o caminho do arquivo");
+            //Tambem fica indisponivel a possibilidade de carregar um .txt(Pq nao existe caminho especificado)
             btnCarrega.setEnabled(false);
         }
     }//GEN-LAST:event_txtCaminhoArquivoFocusLost
 
     private void txtCodigoCarregadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoCarregadoKeyTyped
         if(401 == KeyEvent.KEY_PRESSED){
+            //Se o codigo carregado for alterado, o carregar eh desativado necessitando Salvar o arquivo antes
             btnCarrega.setEnabled(false);
         }
     }//GEN-LAST:event_txtCodigoCarregadoKeyTyped
 
     private void txtCaminhoArquivoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCaminhoArquivoKeyTyped
         if(401 == KeyEvent.KEY_PRESSED){
+            //Se o caminho do arquivo for escrito, entao eh ativado o botao para carregar o txt
             btnCarrega.setEnabled(true);
         }
     }//GEN-LAST:event_txtCaminhoArquivoKeyTyped

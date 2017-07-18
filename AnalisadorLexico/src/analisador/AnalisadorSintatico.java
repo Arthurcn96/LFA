@@ -1,34 +1,62 @@
 package analisador;
 
-
+/**
+ * Contem as variaveis e metodos necessarios para iniciar e carregar o 
+ * texto e ler os tokens recebidos.
+ * @author Grupo6
+ */
 public class AnalisadorSintatico extends Analisador implements Constantes {
 
+    /**
+     * Variavel em que sera carregada o .txt
+     */
     protected MyAnalisadorLexico scanner;
     
+    /**
+     * Carrega o arquivo passado no parametro e o carrega, entao salva em
+     * 'scanner' e entao chama 'leProxToken()'
+     * Erro: RuntimeException;
+     * @param _nomeArquivoEntrada
+     */
     public AnalisadorSintatico(String _nomeArquivoEntrada) {
         this.scanner = new MyAnalisadorLexico(_nomeArquivoEntrada);
         // lê o primeiro token e o coloca no campo tokenReconhecido
         this.leProxToken();
     }
+
+    /**
+     * Chama o metodo 'Analisador()'
+     */
     public AnalisadorSintatico() {
         super();
     }
-// executa 1 vez a máquina de Moore
+
+    /**
+     *  Inicia a execucao da máquina de Moore 
+     */
     public void leProxToken() {
         this.scanner.s0();
     }
 
-    // verifica se o próximo token é t
-    // avança o ponteiro para o próximo token
-    public void reconhece(Token t) {
-        if(t == this.scanner.tokenReconhecido) 
+
+    /**
+     *  Verifica se o próximo token é t
+     *  Avança o ponteiro para o próximo token
+     * @param token
+     */
+    public void reconhece(Token token) {
+        if(token == this.scanner.tokenReconhecido) 
             this.leProxToken();
         else
-            throw new ErroSintatico(this.scanner.tokenReconhecido, t);
+            throw new ErroSintatico(this.scanner.tokenReconhecido, token);
     }
 
-    // verifica se o próximo token é t
- // N O avança o ponteiro de leitura
+    /**
+     * Verifica se o próximo token é t
+     * avança o ponteiro de leitura
+     * @param t
+     * @return
+     */
     public boolean proxTokenIs(Token t) {
         if(t == this.scanner.tokenReconhecido) 
             return true;

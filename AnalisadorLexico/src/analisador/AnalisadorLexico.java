@@ -2,15 +2,49 @@ package analisador;
 import java.io.FileReader;
 import java.io.IOException;
  
+/**
+ * Contem as variaveis e metodos necessarios para iniciar e carregar o 
+ * texto e ler os caracteres recebidos.
+ * @author Grupo6
+ */
 public class AnalisadorLexico extends Analisador {
-    protected char proxCaractere;  // caractere disponível no cabeçote de leitura
-    protected int linha = 1;  // linha atual do arquivo fonte
-    protected StringBuffer entrada = new StringBuffer(); // armazena o conteúdo do arquivo
-    protected int posicao = 0; // posição do caractere a ser lido na entrada  
-    public Token tokenReconhecido; // último token lido
+
+    /**
+     * Caractere disponível no cabeçote de leitura
+     */
+    protected char proxCaractere;  
+
+    /**
+     * Linha atual do arquivo fonte
+     */
+
+    /**
+     * Armazena o conteúdo do arquivo
+     */
+    protected StringBuffer entrada = new StringBuffer(); 
+
+    /**
+     * Posição do caractere a ser lido na entrada  
+     */
+    protected int posicao = 0; 
+
+    /**
+     * Ultimo token lido
+     */
+    public Token tokenReconhecido;  
+
+    /**
+     * Transfere o arquivo para o buffer ‘entrada’
+     */
     protected static String saida;
     
-    // transfere o arquivo para o buffer ‘entrada’
+
+    /**
+     * Carrega o arquivo passado no parametro e o carrega, entao salva em
+     * 'entrada' e entao chama 'leProxCaractere()'
+     * Erro: RuntimeException;
+     * @param nomeArquivodeEntrada
+     */
     public AnalisadorLexico(String _nomeArquivoEntrada) {
         super(_nomeArquivoEntrada);
         try {
@@ -27,8 +61,11 @@ public class AnalisadorLexico extends Analisador {
         }
     }
     
-    // lê o próximo caractere do buffer. Se fim, retorna EOF
-    // avança o ponteiro de leitura 1 posição
+
+    /**
+     * lê o próximo caractere do buffer. Se fim, retorna EOF
+     *  avança o ponteiro de leitura 1 posição
+     */
     public void leProxCaractere() {
         try {
             this.proxCaractere = this.entrada.charAt(this.posicao++);
@@ -38,8 +75,14 @@ public class AnalisadorLexico extends Analisador {
         }
     }
     
-    // verifica se o próximo caractere é um dos que estão em ‘s’
-   // N O avança o ponteiro de leitura
+    //
+
+    /**
+     * verifica se o próximo caractere é um dos que estão em ‘s’
+     * entao avança o ponteiro de leitura
+     * @param String s
+     * @return boolean
+     */
     public boolean proxCaractereIs(String s) {
         if (s.indexOf(this.proxCaractere) != -1)
             return true;

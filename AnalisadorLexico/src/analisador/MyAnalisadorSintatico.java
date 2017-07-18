@@ -1,13 +1,31 @@
 package analisador;
 
-
+/**
+ *
+ * @author Grupo6
+ */
 public class MyAnalisadorSintatico extends AnalisadorSintatico {
+
+    /**
+     *
+     */
     public String nomeArquivoEntrada;
     Token tokenReconhecido;
     
+    /**
+     *
+     * @param _nomeArquivoEntrada
+     */
     public MyAnalisadorSintatico(String _nomeArquivoEntrada) {
         super(_nomeArquivoEntrada);
     }
+    
+
+    /**
+     *
+     * 
+     */
+
     public void listaCom() {
         if(proxTokenIs(Token.VAR)||proxTokenIs(Token.WHILE)|| proxTokenIs(Token.FOR)||proxTokenIs(Token.SWITCH)||proxTokenIs(Token.IF)||proxTokenIs(Token.DO)){
             comando();
@@ -17,7 +35,8 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
         tokenReconhecido = Token.EOF;
         reconhece(Token.EOF);
         }
-        else if(proxTokenIs(Token.FC)){//Permite o bloco estar vazio
+        else if(proxTokenIs(Token.FC)){
+            //Permite o bloco estar vazio
             lambda();
         }
         else{
@@ -25,6 +44,10 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
             throw new ErroSintatico(this.scanner.tokenReconhecido,tokensEsperados);
         }
     }
+
+    /**
+     *
+     */
     public void comando() {
         if(proxTokenIs(Token.VAR)) {
             atribuicao();
@@ -41,14 +64,14 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
         else if(proxTokenIs(Token.DO))
             fdowhile();
         else{
-            lambda();//Permite o programa ser vazio.
-            
-            //Token[] tokensEsperados = {Token.IF,Token.FOR,Token.DO,Token.SWITCH,Token.WHILE};
-            //throw new ErroSintatico(this.scanner.tokenReconhecido,tokensEsperados);
-            
+            //Permite o programa ser vazio.
+            lambda();
         }
     }
 
+    /**
+     *
+     */
     public void fwhile(){
         reconhece(Token.WHILE);
         reconhece(Token.AP);
@@ -56,6 +79,10 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
         reconhece(Token.FP);
         bloco();
     }
+    
+    /**
+     *
+     */
     public void ffor(){
         reconhece(Token.FOR);
         reconhece(Token.AP);
@@ -67,6 +94,10 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
         reconhece(Token.FP);
         bloco();
     }
+    
+    /**
+     *
+     */
     public void fswitch() {
         reconhece(Token.SWITCH);
         reconhece(Token.AP);
@@ -76,6 +107,10 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
         fcase();
         reconhece(Token.FC);
     }
+    
+    /**
+     *
+     */
     public void fcase(){
         if(proxTokenIs(Token.CASE)){
             leProxToken();
@@ -91,6 +126,10 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
             throw new ErroSintatico(this.scanner.tokenReconhecido,tokensEsperados);
         }
     }
+    
+    /**
+     *
+     */
     public void caractere(){
         if(proxTokenIs(Token.APOST)){
             leProxToken();
@@ -107,6 +146,10 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
             throw new ErroSintatico(this.scanner.tokenReconhecido,tokensEsperados);
         }
     }
+    
+    /**
+     * 
+     */
     private void fif() {
         reconhece(Token.IF);
         reconhece(Token.AP);
@@ -114,6 +157,10 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
         reconhece(Token.FP);
         bloco();
     }
+    
+    /**
+     * 
+     */
     private void fdowhile() {
         reconhece(Token.DO);
         bloco();
@@ -123,8 +170,15 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
         reconhece(Token.FP);
         reconhece(Token.PTVIRG);
     }
-    private void lambda() { }
     
+    /**
+     * Implementacao do lambda da GLC
+     */
+    private void lambda() { }//Lambda sendo um metodo que nao faz nada.
+    
+    /**
+     * 
+     */
     private void bloco() {
         if(proxTokenIs(Token.AC)){
             leProxToken();
@@ -140,6 +194,9 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
         }
     }
     
+    /**
+     *
+     */
     public void atribuicao() {
         if(proxTokenIs(Token.VAR)){
             leProxToken();
@@ -150,6 +207,9 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
         }
     }
 
+    /**
+     *
+     */
     public void elemento(){
         if(proxTokenIs(Token.OPIG)){
             leProxToken();
@@ -164,6 +224,10 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
             throw new ErroSintatico(this.scanner.tokenReconhecido,tokensEsperados);
         }
     }
+    
+    /**
+     *
+     */
     public void exp() {
         if(proxTokenIs(Token.AP)){ 
             leProxToken();
@@ -194,6 +258,10 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
             throw new ErroSintatico(this.scanner.tokenReconhecido,tokensEsperados);
         }
     }
+    
+    /**
+     *
+     */
     public void s(){
         if(proxTokenIs(Token.OPBI)||proxTokenIs(Token.OPBIUN)){
             op();
@@ -201,10 +269,14 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
             s();
         }
         else{
-            //Token[] tokensEsperados = {Token.OPBI,Token.OPBIUN};
-            //throw new ErroSintatico(this.scanner.tokenReconhecido,tokensEsperados);
+            //Atribuicao se torna vazio, possibilitanto for(;i<10;){...}
+            lambda();
         }
     }
+    
+    /**
+     *
+     */
     public void op(){
         if(proxTokenIs(Token.OPBI)){
             leProxToken();
@@ -218,6 +290,3 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
     }
     
     }
-
-
-
