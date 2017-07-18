@@ -7,7 +7,7 @@ package analisador;
 public class MyAnalisadorLexico extends AnalisadorLexico {
     
     /**
-     *
+     * Lexico
      * @param _nomeArquivoEntrada
      */
     public MyAnalisadorLexico(String _nomeArquivoEntrada) {
