@@ -45,7 +45,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
             leProxCaractere();
             q6();
         }
-        else if(this.proxCaractere==OPUNARIO){
+        else if (this.proxCaractereIs(OPUNARIO)){
             leProxCaractere();
             q7();
         }
@@ -223,7 +223,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     * Reconhece '&'
+     * Reconhece 'e comercial'
      */
     public void q12(){
        if(this.proxCaractere==E){
@@ -247,7 +247,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     * Reconhece >= ou =<
+     * Reconhece 'maior igual' ou 'menor igual'
      */
     public void q14(){
         if(this.proxCaractere==OPIGUAL){
