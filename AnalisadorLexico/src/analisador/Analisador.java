@@ -13,7 +13,7 @@ public abstract class Analisador implements Constantes {
 
     /**
      * Atribui a String _nomeArquivoEntrada a variavel nomeArquivoEntrada
-     * @param _nomeArquivoEntrada
+     * @param _nomeArquivoEntrada Caminho do arquivo .txt
      */
     public Analisador(String _nomeArquivoEntrada) {
         this.nomeArquivoEntrada = _nomeArquivoEntrada;

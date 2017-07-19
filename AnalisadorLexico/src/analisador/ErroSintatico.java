@@ -13,8 +13,8 @@ public class ErroSintatico extends RuntimeException implements Constantes {
      * O metodo salva um tokens recebidos e conjunto de esperados em uma
      * variavel array da classe.
      * 
-     * @param _tokenEncontrado
-     * @param _tokensEsperados
+     * @param _tokenEncontrado Token encontrado 
+     * @param _tokensEsperados Vetor com Tokens que se esperava encontrar
      */
     public ErroSintatico(Token _tokenEncontrado, Token[] _tokensEsperados) {
         this.tokenEncontrado = _tokenEncontrado;
@@ -24,8 +24,8 @@ public class ErroSintatico extends RuntimeException implements Constantes {
     /**
      * O metodo salva o Token recebidos e esperados nas variaveis da
      * classe.
-     * @param _tokenEncontrado
-     * @param _tokenEsperado
+     * @param _tokenEncontrado Token Encontrado
+     * @param _tokenEsperado Token que se esperava encontrar
      */
     public ErroSintatico(Token _tokenEncontrado, Token _tokenEsperado) {
         this.tokenEncontrado = _tokenEncontrado;

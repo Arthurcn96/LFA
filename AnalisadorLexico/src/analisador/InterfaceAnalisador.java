@@ -191,7 +191,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
      * Metodo que carrega o .txt do 'caminhoArquivo' passado, e entao 
      * carrega no output do analisador.
      * 
-     * @param caminhoArquivo 
+     * @param caminhoArquivo O caminho para o arquivo .txt
      */
     public void carregarArquivo(String caminhoArquivo){
         try{
@@ -213,7 +213,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
     /**
      * Procura um arquivo ou pasta do diretorio, passando para o JtextField
      * (caixa de texto) o caminho para o arquivo selecionado.
-     * @param evt 
+     * @param evt Evento de clique
      */
     private void btnArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArquivoActionPerformed
         try{
@@ -242,7 +242,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
     
     /**
      * Eh entao chamada a funcao que inicia a Analise Sintatica
-     * @param evt 
+     * @param evt Evento de clique
      */
     private void btnCarregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregaActionPerformed
    
@@ -279,7 +279,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
 
     /**
      * Salva o arquivo editado no 'Codigo Escolhido' (JtextArea)
-     * @param evt 
+     * @param evt Evento de clique
      */
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
    FileWriter arq = null;
@@ -288,18 +288,18 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
         if(txtCaminhoArquivo.getText().isEmpty() || txtCaminhoArquivo.getText().equals(("Digite o caminho do arquivo"))){
             file = new JFileChooser();
             file.setDialogTitle("Procurar arquivos");
-            file.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+            file.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);//Pode retornar tanto pasta quanto arquivos
 
-            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivo txt", "txt");
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivo txt", "txt");//Apenas arquivos .txt podem ser selecionados
             file.setFileFilter(filtro);
 
             int retorno = file.showOpenDialog(this);
             txtCaminhoArquivo.setText( file.getSelectedFile().getPath() );
             
         }
-        if(txtCaminhoArquivo.getText().contains(".txt")){
+        if(txtCaminhoArquivo.getText().contains(".txt")){//Se o arquivo escrito tiver .txt entao carregue o arquivo
             arq = new FileWriter(txtCaminhoArquivo.getText());
-        }else{
+        }else{//Caso nao tenha, adiciona .txt no fim do caminho
             arq = new FileWriter(txtCaminhoArquivo.getText()+".txt");
             txtCaminhoArquivo.setText(txtCaminhoArquivo.getText()+".txt");
         }

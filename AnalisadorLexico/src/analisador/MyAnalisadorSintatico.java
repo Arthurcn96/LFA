@@ -1,20 +1,20 @@
 package analisador;
 
 /**
- *
+ * Aonde esta convertido toda a gramatica livre de contexto(GLC) em codigo
  * @author Grupo6
  */
 public class MyAnalisadorSintatico extends AnalisadorSintatico {
 
     /**
-     *
+     * 
      */
     public String nomeArquivoEntrada;
     Token tokenReconhecido;
     
     /**
-     *
-     * @param _nomeArquivoEntrada
+     * Construtor
+     * @param _nomeArquivoEntrada Caminho do arquivo .txt
      */
     public MyAnalisadorSintatico(String _nomeArquivoEntrada) {
         super(_nomeArquivoEntrada);
@@ -22,10 +22,9 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
     
 
     /**
-     *
-     * 
+     * O estado inicial da gramatica no qual a maquina pode ir para qualquer 
+     * outro estado reconhecivel
      */
-
     public void listaCom() {
         if(proxTokenIs(Token.VAR)||proxTokenIs(Token.WHILE)|| proxTokenIs(Token.FOR)||proxTokenIs(Token.SWITCH)||proxTokenIs(Token.IF)||proxTokenIs(Token.DO)){
             comando();
@@ -46,7 +45,7 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
     }
 
     /**
-     *
+     * Estado reconhecedor de todos os Tokens
      */
     public void comando() {
         if(proxTokenIs(Token.VAR)) {
@@ -70,7 +69,7 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
     }
 
     /**
-     *
+     * Reconhece o comando 'while'
      */
     public void fwhile(){
         reconhece(Token.WHILE);
@@ -80,8 +79,8 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
         bloco();
     }
     
-    /**
-     *
+    /** 
+     * Reconhece o comando 'for'
      */
     public void ffor(){
         reconhece(Token.FOR);
@@ -96,7 +95,7 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
     }
     
     /**
-     *
+     * Reconhece o comando 'switch'
      */
     public void fswitch() {
         reconhece(Token.SWITCH);
@@ -109,7 +108,7 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
     }
     
     /**
-     *
+     * Reconhece o comando 'case'
      */
     public void fcase(){
         if(proxTokenIs(Token.CASE)){
@@ -128,7 +127,7 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
     }
     
     /**
-     *
+     * Reconhece caracteres, numeros ou caracteres entre aspas simples
      */
     public void caractere(){
         if(proxTokenIs(Token.APOST)){
@@ -148,7 +147,7 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
     }
     
     /**
-     * 
+     * Reconhece o comando 'if'
      */
     private void fif() {
         reconhece(Token.IF);
@@ -159,7 +158,7 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
     }
     
     /**
-     * 
+     *  Reconhece o comando 'do while'
      */
     private void fdowhile() {
         reconhece(Token.DO);
@@ -177,7 +176,7 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
     private void lambda() { }//Lambda sendo um metodo que nao faz nada.
     
     /**
-     * 
+     * Reconhece infinitos comandos
      */
     private void bloco() {
         if(proxTokenIs(Token.AC)){
@@ -195,7 +194,7 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
     }
     
     /**
-     *
+     * Reconhece a atribuicao
      */
     public void atribuicao() {
         if(proxTokenIs(Token.VAR)){
@@ -208,7 +207,7 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
     }
 
     /**
-     *
+     * Tira a recursao de atribuicao
      */
     public void elemento(){
         if(proxTokenIs(Token.OPIG)){
@@ -226,7 +225,7 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
     }
     
     /**
-     *
+     * Reconhece expressoes
      */
     public void exp() {
         if(proxTokenIs(Token.AP)){ 
@@ -260,7 +259,7 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
     }
     
     /**
-     *
+     * Tira a recursao do exp(expressao)
      */
     public void s(){
         if(proxTokenIs(Token.OPBI)||proxTokenIs(Token.OPBIUN)){
@@ -275,7 +274,7 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
     }
     
     /**
-     *
+     * Reconhece Operacoes Binarias e Unarias
      */
     public void op(){
         if(proxTokenIs(Token.OPBI)){

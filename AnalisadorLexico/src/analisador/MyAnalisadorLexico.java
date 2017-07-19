@@ -1,21 +1,22 @@
 package analisador;
 
 /**
- *
+ * Aonde esta convertido toda a maquina de Moore em codigo
  * @author Grupo6
  */
 public class MyAnalisadorLexico extends AnalisadorLexico {
     
     /**
-     * Lexico
-     * @param _nomeArquivoEntrada
+     * Construtor
+     * @param _nomeArquivoEntrada Caminho do arquivo de entrada
      */
     public MyAnalisadorLexico(String _nomeArquivoEntrada) {
         super(_nomeArquivoEntrada);
     }
     
     /**
-     *
+     * O estado inicial da maquina no qual a maquina pode ir para qualquer outro
+     * estado reconhecivel
      */
     public void s0() {
         saida = "" + this.proxCaractere;
@@ -129,51 +130,51 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
     }
     
     /**
-     *
+     * Reconhece 'Abre Parenteses'
      */
     public void q1() {
         this.tokenReconhecido = Token.AP;
         }
 
     /**
-     *
+     * Reconhece 'Fecha Parenteses'
      */
     public void q2() {
         this.tokenReconhecido = Token.FP;
     }
 
     /**
-     *
+     * Reconhece 'Apostrofo'
      */
     public void q3() {
         this.tokenReconhecido = Token.APOST;
     }
 
     /**
-     *
+     * Reconhece 'Abre chaves'
      */
     public void q4() {
         this.tokenReconhecido = Token.AC;
     }
 
     /**
-     *
+     * Reconhece 'Fecha chaves'
      */
     public void q5(){
         this.tokenReconhecido = Token.FC;
     }
 
     /**
-     *
+     *Reconhece 'Ponto e virgula'
      */
-    public void q6(){//Ponto e virgula
+    public void q6(){
         this.tokenReconhecido = Token.PTVIRG;
     }
 
     /**
-     *
+     * Reconhece Operacoes Unarias
      */
-    public void q7(){//Operacoess unarias 
+    public void q7(){ 
         if(this.proxCaractere==OPIGUAL){
         saida = saida + this.proxCaractere;
             leProxCaractere();
@@ -183,21 +184,21 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
     }
 
     /**
-     *
+     * Reconhece 'Dois Pontos'
      */
     public void q8(){
         this.tokenReconhecido = Token.DP;
     }
 
     /**
-     *
+     * Reconhece Operador binario
      */
     public void q9(){
         this.tokenReconhecido = Token.OPBIUN;
     }
 
     /**
-     *
+     * Reconhece = ou ==  
      */
     public void q10(){
         if(this.proxCaractere==OPIGUAL){
@@ -210,7 +211,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
     }
 
     /**
-     *
+     * Reconhece Numeros
      */
     public void q11(){
         if(this.proxCaractereIs(DIGITOS)){
@@ -222,7 +223,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece '&'
      */
     public void q12(){
        if(this.proxCaractere==E){
@@ -234,7 +235,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece |
      */
     public void q13(){
        if(this.proxCaractere==OU){
@@ -246,7 +247,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece >= ou =<
      */
     public void q14(){
         if(this.proxCaractere==OPIGUAL){
@@ -258,14 +259,14 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
     }
 
     /**
-     *
+     * Reconhece Operadoes Binarios
      */
     public void q15(){
         this.tokenReconhecido = Token.OPBI;
     }
 
     /**
-     *
+     * Reconhece 'o' (do)ou String
      */
     public void q16(){
         if(this.proxCaractere=='o'){
@@ -279,7 +280,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece um 'f' (if) ou String
      */
     public void q17(){
         if(this.proxCaractere=='f'){
@@ -293,7 +294,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece um 'o'(for) ou String
      */
     public void q18(){
        if(this.proxCaractere=='o'){
@@ -307,7 +308,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece 'a'(case) ou String
      */
     public void q19(){
        if(this.proxCaractere=='a'){
@@ -321,7 +322,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece 'h'(while) ou String
      */
     public void q20(){
        if(this.proxCaractere=='h'){
@@ -335,7 +336,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece 'w'(switch) ou String
      */
     public void q21(){
        if(this.proxCaractere=='w'){
@@ -349,9 +350,9 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece qualquer combinacao de letras
      */
-    public void q22(){//Todas as combinacoes de letras
+    public void q22(){
        if(this.proxCaractereIs(LETRAS)){
            saida = saida + this.proxCaractere;
            leProxCaractere();
@@ -363,7 +364,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece numeros reais
      */
     public void q23(){  
         if(this.proxCaractereIs(DIGITOS)) {
@@ -380,7 +381,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
     }
 
     /**
-     *
+     * Reconhece o token 'do' ou uma String
      */
     public void q24(){
        if(this.proxCaractereIs(LETRAS)){
@@ -392,7 +393,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
    
     /**
-     *
+     * Reconhece o token 'if' ou uma String qualquer
      */
     public void q25(){
         if(this.proxCaractereIs(LETRAS)){
@@ -404,7 +405,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece o 'r'(for) ou uma String qualquer
      */
     public void q26(){
        if(this.proxCaractere=='r'){
@@ -418,7 +419,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece o 'for' ou uma string qualquer
      */
     public void q27(){
         if(this.proxCaractereIs(LETRAS)){
@@ -430,7 +431,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece o 's'(case) ou uma string qualquer
      */
     public void q28(){
         if(this.proxCaractere=='s'){
@@ -444,7 +445,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece 'e'(case) ou uma string qualquer
      */
     public void q29(){
         if(this.proxCaractere=='e'){
@@ -458,7 +459,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece o token 'case' ou uma string qualquer
      */
     public void q30(){
         if(this.proxCaractereIs(LETRAS)){
@@ -471,7 +472,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece 'i'(while) ou uma string qualquer
      */
     public void q31(){
          if(this.proxCaractere=='i'){
@@ -484,7 +485,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece 'l'(while) ou uma string qualquer
      */
     public void q32(){
         if(this.proxCaractere=='l'){
@@ -497,7 +498,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece 'e'(while) ou uma string qualquer
      */
     public void q33(){
         if(this.proxCaractere=='e'){
@@ -510,7 +511,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     *Reconhece o token 'while' ou uma string qualquer
      */
     public void q34(){
        if(this.proxCaractereIs(LETRAS)){
@@ -522,7 +523,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece 'i'(switch) ou uma string qualquer
      */
     public void q35(){
        if(this.proxCaractere=='i'){
@@ -535,7 +536,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece o 't'(switch) ou uma string qualquer
      */
     public void q36(){
         if(this.proxCaractere=='t'){
@@ -548,7 +549,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece o 'c'(switch) ou uma string qualquer
      */
     public void q37(){
         if(this.proxCaractere=='c'){
@@ -561,7 +562,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     *Reconhece o 'h'(switch) ou uma string qualquer
      */
     public void q38(){
        if(this.proxCaractere=='h'){
@@ -574,7 +575,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhecer o token 'switch' ou uma string qualquer
      */
     public void q39(){
        if(this.proxCaractereIs(LETRAS)){
@@ -586,21 +587,21 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece Operacao Binaria
      */
     public void q40(){
         this.tokenReconhecido = Token.OPBI;
     }
 
     /**
-     *
+     * Reconhece Operacao Binaria
      */
     public void q41(){
         this.tokenReconhecido = Token.OPBI;
     }
 
     /**
-     *
+     * Reconhece um conjunto de numeros ou um numero
      */
     public void q42(){
        if(this.proxCaractereIs(DIGITOS)){
@@ -612,7 +613,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
    }
 
     /**
-     *
+     * Reconhece um conjunto de numeros
      */
     public void q43(){
        if(this.proxCaractereIs(DIGITOS)){

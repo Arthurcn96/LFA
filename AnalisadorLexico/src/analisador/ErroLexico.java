@@ -12,8 +12,8 @@ public class ErroLexico extends RuntimeException {
     /**
      * O metodo salva o caractere recebidos e esperados nas variaveis da
      * classe.
-     * @param _caracterEncontrado
-     * @param _caracteresEsperados
+     * @param _caracterEncontrado O caractere encontrado 
+     * @param _caracteresEsperados O caractere Esperado a ser encontrado
      */
     public ErroLexico(char _caracterEncontrado, String _caracteresEsperados) {
         this.caractereEncontrado = _caracterEncontrado;

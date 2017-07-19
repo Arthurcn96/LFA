@@ -43,7 +43,7 @@ public class AnalisadorLexico extends Analisador {
      * Carrega o arquivo passado no parametro e o carrega, entao salva em
      * 'entrada' e entao chama 'leProxCaractere()'
      * Erro: RuntimeException;
-     * @param nomeArquivodeEntrada
+     * @param _nomeArquivodeEntrada Caminho do arquivo.txt
      */
     public AnalisadorLexico(String _nomeArquivoEntrada) {
         super(_nomeArquivoEntrada);
@@ -80,8 +80,8 @@ public class AnalisadorLexico extends Analisador {
     /**
      * verifica se o próximo caractere é um dos que estão em ‘s’
      * entao avança o ponteiro de leitura
-     * @param String s
-     * @return boolean
+     * @param String s Caractere/String a ser encontrado
+     * @return boolean true - caso for o caractere esperado; false - caso nao for
      */
     public boolean proxCaractereIs(String s) {
         if (s.indexOf(this.proxCaractere) != -1)

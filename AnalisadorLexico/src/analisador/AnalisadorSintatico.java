@@ -16,7 +16,7 @@ public class AnalisadorSintatico extends Analisador implements Constantes {
      * Carrega o arquivo passado no parametro e o carrega, entao salva em
      * 'scanner' e entao chama 'leProxToken()'
      * Erro: RuntimeException;
-     * @param _nomeArquivoEntrada
+     * @param _nomeArquivoEntrada Caminho do arquivo .txt
      */
     public AnalisadorSintatico(String _nomeArquivoEntrada) {
         this.scanner = new MyAnalisadorLexico(_nomeArquivoEntrada);
@@ -42,7 +42,7 @@ public class AnalisadorSintatico extends Analisador implements Constantes {
     /**
      *  Verifica se o próximo token é t
      *  Avança o ponteiro para o próximo token
-     * @param token
+     * @param token Token contido na interface Constantes
      */
     public void reconhece(Token token) {
         if(token == this.scanner.tokenReconhecido) 
@@ -54,8 +54,8 @@ public class AnalisadorSintatico extends Analisador implements Constantes {
     /**
      * Verifica se o próximo token é t
      * avança o ponteiro de leitura
-     * @param t
-     * @return
+     * @param t Token a ser verificado
+     * @return boolean true - caso t for o proximo token; false - se nao for
      */
     public boolean proxTokenIs(Token t) {
         if(t == this.scanner.tokenReconhecido) 
