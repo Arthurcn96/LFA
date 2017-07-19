@@ -45,7 +45,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
             leProxCaractere();
             q6();
         }
-        else if (this.proxCaractereIs(OPUNARIO)){
+        else if (this.proxCaractere == OPUNARIO){
             leProxCaractere();
             q7();
         }
@@ -53,7 +53,7 @@ public class MyAnalisadorLexico extends AnalisadorLexico {
             leProxCaractere();
             q8();
         }
-        else if(this.proxCaractereIs(OPBINUNARIO)){// +|-
+        else if(this.proxCaractereIs(OPBINUNARIO)){ //+|-
             leProxCaractere();
             q9();
         }

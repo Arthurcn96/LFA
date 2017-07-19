@@ -42,7 +42,7 @@ public class ErroSintatico extends RuntimeException implements Constantes {
         String listaDeTokensEsperados = "";
         for(int i=0; i<this.tokensEsperados.length; i++)
             listaDeTokensEsperados += this.tokensEsperados[i] + " ";
-        return "token encontrado: "+this.tokenEncontrado+
+        return "token encontrado: "+this.tokenEncontrado +
                "\nera(m) esperado(s): "+listaDeTokensEsperados;
     }
 }
