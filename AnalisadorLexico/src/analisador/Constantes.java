@@ -22,6 +22,7 @@ public interface Constantes {
                 WHILE = "while",
                 FOR ="for",
                 IF ="if",
+                OPUNARIO = "!-+",
                 SWITCH ="switch",
                 CASE = "case";
     
@@ -35,7 +36,6 @@ public interface Constantes {
             FECHACHAVES = '}',
             ABREPAR = '(',
             FECHAPAR = ')',
-            OPUNARIO = '!',
             PONTO = '.',
             E ='&',
             OU ='|';

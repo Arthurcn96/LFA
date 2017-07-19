@@ -202,6 +202,7 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
             elemento();
         }
         else{
+            //Atribuicao se torna vazio, possibilitanto for(;i<10;){...}
             lambda();
         }
     }
@@ -268,7 +269,6 @@ public class MyAnalisadorSintatico extends AnalisadorSintatico {
             s();
         }
         else{
-            //Atribuicao se torna vazio, possibilitanto for(;i<10;){...}
             lambda();
         }
     }
