@@ -256,7 +256,7 @@ public class InterfaceAnalisador extends javax.swing.JFrame {
             
             parser.listaCom();//Inicia a gramatica
  
-            txtOutputAnalisador.setText("Análise realizada com sucesso no arquivo " + file.getSelectedFile().getName());
+            txtOutputAnalisador.setText("Análise realizada com sucesso no arquivo " + txtCaminhoArquivo.getText());
             
         }
         catch(ErroLexico e) {
